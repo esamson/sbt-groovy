@@ -22,10 +22,10 @@ object GroovyPlugin extends AutoPlugin {
   import autoImport._
 
   def defaultSettings(config: Configuration) = Seq(
-    groovyVersion := "2.1.8",
+    groovyVersion := "2.4.12",
     libraryDependencies ++= Seq[ModuleID](
       "org.codehaus.groovy" % "groovy-all" % groovyVersion.value % config.name,
-      "org.apache.ant" % "ant" % "1.8.4" % config.name
+      "org.apache.ant" % "ant" % "1.10.1" % config.name
     ),
     /*managedClasspath in groovyc := (classpathTypes in groovyc, update) map { (ct, report) =>
       Classpaths.managedJars(config, ct, report)
@@ -65,6 +65,7 @@ object GroovyPlugin extends AutoPlugin {
         lazy val classDirectoryAllGroovy = classDirectory.all(groovycFilter).value
 
         lazy val s: TaskStreams = streams.value
+        s.log.info(s"nb: $nb")
 
         if (nb > 0) {
 
