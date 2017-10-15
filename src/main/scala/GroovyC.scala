@@ -3,7 +3,7 @@ package org.softnetwork.sbt.plugins
 import sbt._
 import java.io.File
 
-import sbt.classpath.ClasspathUtilities
+import sbt.internal.inc.classpath.ClasspathUtilities
 
 class GroovyC(val classpath : Seq[File], val sourceDirectory : File, val stubDirectory : File, val destinationDirectory : File) {
 

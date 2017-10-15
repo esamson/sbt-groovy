@@ -6,7 +6,7 @@ organization := "org.softnetwork.sbt.plugins"
 
 version := "0.1.4-SNAPSHOT"
 
-scalaVersion := "2.10.6"
+scalaVersion := "2.12.3"
 
 publishMavenStyle := true
 
@@ -43,7 +43,7 @@ pomExtra := (
     </developer>
   </developers>)
 
-ScriptedPlugin.scriptedSettings
+//ScriptedPlugin.scriptedSettings
 
 scriptedLaunchOpts ++= Seq(
   "-Xmx2048M", 

@@ -1,5 +1,4 @@
 
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.3.0")
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.2")
 
-libraryDependencies += "org.scala-sbt" % "scripted-plugin" % sbtVersion.value
-
+libraryDependencies += { "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value }
