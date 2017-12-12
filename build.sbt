@@ -2,9 +2,9 @@ sbtPlugin := true
 
 name := "sbt-groovy"
 
-organization := "org.softnetwork.sbt.plugins"
+organization := "ph.samson"
 
-version := "0.1.3"
+version := "0.2.0-SNAPSHOT"
 
 scalaVersion := "2.10.4"
 
@@ -23,7 +23,7 @@ publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 
 pomExtra := (
-  <url>https://github.com/fupelaqu/sbt-groovy</url>
+  <url>https://github.com/esamson/sbt-groovy</url>
   <licenses>
     <license>
       <name>MIT</name>
@@ -32,10 +32,15 @@ pomExtra := (
     </license>
   </licenses>
   <scm>
-    <url>git@github.com:fupelaqu/sbt-groovy.git</url>
-    <connection>scm:git:git@github.com:fupelaqu/sbt-groovy.git</connection>
+    <url>git@github.com:esamson/sbt-groovy.git</url>
+    <connection>scm:git:git@github.com:esamson/sbt-groovy.git</connection>
   </scm>
   <developers>
+    <developer>
+      <id>esamson</id>
+      <name>Edward Samson</name>
+      <url>https://edward.samson.ph</url>
+    </developer>
     <developer>
       <id>smanciot</id>
       <name>Stéphane Manciot</name>

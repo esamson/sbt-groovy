@@ -1,4 +1,4 @@
-package org.softnetwork.sbt.plugins
+package ph.samson.sbt.groovy
 
 import sbt._
 import sbt.Keys._

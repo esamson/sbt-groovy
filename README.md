@@ -1,7 +1,8 @@
 sbt-groovy
 ==========
 
-an sbt plugin for groovy
+An sbt plugin for groovy forked from
+[fupelaqu/sbt-groovy](https://github.com/fupelaqu/sbt-groovy)
 
 ## Requirements
 
@@ -13,10 +14,7 @@ an sbt plugin for groovy
 Add plugin to *project/plugins.sbt*:
 
 ```scala
-
-resolvers += "Sonatype Repository" at "https://oss.sonatype.org/content/groups/public"
-
-addSbtPlugin("org.softnetwork.sbt.plugins" % "sbt-groovy" % "0.1.3")
+addSbtPlugin("ph.samson" % "sbt-groovy" % "0.2.0")
 ```
 
 For *.sbt* build definitions, inject the plugin settings in *build.sbt*:
@@ -30,12 +28,12 @@ seq(testGroovy.settings :_*)
 For *.scala* build definitions, inject the plugin settings in *Build.scala*:
 
 ```scala
-Project(..., settings = Project.defaultSettings ++ org.softnetwork.sbt.plugins.GroovyPlugin.groovy.settings ++ org.softnetwork.sbt.plugins.GroovyPlugin.testGroovy.settings)
+Project(..., settings = Project.defaultSettings ++ ph.samson.sbt.groovy.GroovyPlugin.groovy.settings ++ ph.samson.sbt.groovy.GroovyPlugin.testGroovy.settings)
 ```
 
 ## Configuration
 
-Plugin keys are located in `org.softnetwork.sbt.plugins.Keys`
+Plugin keys are located in `ph.samson.sbt.groovy.Keys`
 
 ### Groovy sources
 
