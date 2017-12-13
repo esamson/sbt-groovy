@@ -1,4 +1,4 @@
-import org.softnetwork.sbt.plugins.GroovyPlugin
+import ph.samson.sbt.groovy.GroovyPlugin
 
 enablePlugins(GroovyPlugin)
 

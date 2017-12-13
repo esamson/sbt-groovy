@@ -1,4 +1,1 @@
-
-addSbtPlugin("org.softnetwork.sbt.plugins" % "sbt-groovy" % sys.props("plugin.version"))
-
-
+addSbtPlugin("ph.samson" % "sbt-groovy" % sys.props("plugin.version"))

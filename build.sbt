@@ -48,8 +48,6 @@ pomExtra := (
     </developer>
   </developers>)
 
-//ScriptedPlugin.scriptedSettings
-
 scriptedLaunchOpts ++= Seq(
   "-Xmx2048M", 
   "-XX:MaxMetaspaceSize=512M",
