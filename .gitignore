@@ -1,24 +1,8 @@
-*.class
-*.log
-
-# sbt specific
-dist/*
+# SBT output
 target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
 
-# Scala-IDE specific
-.scala_dependencies
+# IntelliJ IDEA
+/.idea/
 
-.cache
-
-.classpath
-
-.project
-
-.idea
-
-*.swp
-
+# PGP keys
+*.asc

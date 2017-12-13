@@ -20,22 +20,13 @@ lazy val root = (project in file(".")).settings(
           url = url("https://edward.samson.ph")
         )
       ),
-      scalaVersion := "2.12.4"
+      scalaVersion := "2.12.4",
+      pgpPublicRing := file("./travis/pubring.asc"),
+      pgpSecretRing := file("./travis/secring.asc"),
+      releaseEarlyWith := SonatypePublisher
     )),
   name := "sbt-groovy",
   sbtPlugin := true,
-  publishMavenStyle := true,
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
-      Some("snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("releases" at nexus + "service/local/staging/deploy/maven2")
-  },
-  publishArtifact in Test := false,
-  pomIncludeRepository := { _ =>
-    false
-  },
   scriptedLaunchOpts ++= Seq(
     "-Xmx2048M",
     "-XX:MaxMetaspaceSize=512M",
