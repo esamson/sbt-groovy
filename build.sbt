@@ -6,7 +6,7 @@ organization := "ph.samson"
 
 version := "0.2.0-SNAPSHOT"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.12.3"
 
 publishMavenStyle := true
 
@@ -47,3 +47,14 @@ pomExtra := (
       <url>http://www.linkedin.com/in/smanciot</url>
     </developer>
   </developers>)
+
+//ScriptedPlugin.scriptedSettings
+
+scriptedLaunchOpts ++= Seq(
+  "-Xmx2048M", 
+  "-XX:MaxMetaspaceSize=512M",
+  s"-Dplugin.version=${version.value}"
+)
+
+scriptedBufferLog := false
+
