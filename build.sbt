@@ -6,7 +6,7 @@ organization := "ph.samson"
 
 version := "0.2.0-SNAPSHOT"
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.12.4"
 
 publishMavenStyle := true
 
