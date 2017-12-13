@@ -2,7 +2,6 @@ lazy val root = (project in file(".")).settings(
   inThisBuild(
     Seq(
       organization := "ph.samson",
-      version := "0.2.0-SNAPSHOT",
       homepage := Some(url("https://github.com/esamson/sbt-groovy")),
       licenses := Seq(
         "MIT" -> url("http://opensource.org/licenses/mit-license.php")),
@@ -23,6 +22,7 @@ lazy val root = (project in file(".")).settings(
       scalaVersion := "2.12.4",
       pgpPublicRing := file("./travis/pubring.asc"),
       pgpSecretRing := file("./travis/secring.asc"),
+      releaseEarlyWith := SonatypePublisher
     )),
   name := "sbt-groovy",
   sbtPlugin := true,
@@ -31,6 +31,5 @@ lazy val root = (project in file(".")).settings(
     "-XX:MaxMetaspaceSize=512M",
     s"-Dplugin.version=${version.value}"
   ),
-  scriptedBufferLog := false,
-  releaseEarlyWith := SonatypePublisher
+  scriptedBufferLog := false
 )
