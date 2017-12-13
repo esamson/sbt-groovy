@@ -23,7 +23,6 @@ lazy val root = (project in file(".")).settings(
       scalaVersion := "2.12.4",
       pgpPublicRing := file("./travis/pubring.asc"),
       pgpSecretRing := file("./travis/secring.asc"),
-      releaseEarlyWith := SonatypePublisher
     )),
   name := "sbt-groovy",
   sbtPlugin := true,
@@ -32,5 +31,6 @@ lazy val root = (project in file(".")).settings(
     "-XX:MaxMetaspaceSize=512M",
     s"-Dplugin.version=${version.value}"
   ),
-  scriptedBufferLog := false
+  scriptedBufferLog := false,
+  releaseEarlyWith := SonatypePublisher
 )
