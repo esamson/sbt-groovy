@@ -31,5 +31,22 @@ lazy val root = (project in file(".")).settings(
     "-XX:MaxMetaspaceSize=512M",
     s"-Dplugin.version=${version.value}"
   ),
-  scriptedBufferLog := false
+  scriptedBufferLog := false,
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    val profileM = sonatypeStagingRepositoryProfile.?.value
+
+    if (isSnapshot.value) {
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    } else {
+      val staged = profileM map { stagingRepoProfile =>
+        "releases" at nexus +
+          "service/local/staging/deployByRepositoryId/" +
+          stagingRepoProfile.repositoryId
+      }
+
+      staged.orElse(
+        Some("releases" at nexus + "service/local/staging/deploy/maven2"))
+    }
+  }
 )
