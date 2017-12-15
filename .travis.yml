@@ -7,6 +7,8 @@ script:
 jdk:
 - oraclejdk8
 before_install:
+- curl -L -o $HOME/test.pom "https://repo1.maven.org/maven2/ch/epfl/scala/sbt-release-early_2.12_1.0/2.0.0+7-6b2a7027/sbt-release-early-2.0.0+7-6b2a7027.pom"
+- cat $HOME/test.pom
 - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then
     openssl aes-256-cbc -K $encrypted_c075b3e8fae5_key -iv $encrypted_c075b3e8fae5_iv -in travis/secrets.tar.enc -out travis/secrets.tar -d;
     tar xv -C travis -f travis/secrets.tar;
