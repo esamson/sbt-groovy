@@ -19,7 +19,7 @@ deploy:
   api_key:
     secure: PVmZ5SdLYIGhv1nAjVuqh2ZT6LeEoKY1ZB018A+ucn9ZIQw0mxeLrtJ1ESOCoyw8aY30EL6p3u83Pnp4H9cOLtpXnKogaWcrBkV5yK8dGRCVgdzRhZiINukeC8kTtZexgcB0/ZwBekUV1BstxoNpFnogVJFQOdpuOlI34Pm0nlmcIa7xuNijY1/VPaDwatWl4jHEXGhBKxR137+DiYcM+C2Vgze4hEu4LhGlre9McHpMV81BlvvzocNDwR+FS7sun0H5JzgmfG80IqN7Z4EPUF4gnGXvVbDJOwMdmLX1ZljqsS/EjjKU9K4Tk8UTeqAAiCDdy8ClEAdRujtwXVJK+paUBxZ3UaGixUA4hSUyL6jOZrcW0E3XKpj8/lngx1+hflh/mEde1aXQ3Y5NNcpSqJ2x07uAYFEMXO1toynXUz/k92CrLd9/wEiSf4Tfbgxj29qO0YSCfxj4v/pEVY/kM9gztfngEOJy/LCAUH2MIhBZdZCTb+NMXqp2L5RcPwcqg/hOStBlc3wtPtSMuvlvEz5jW5WYcfv2MMGZhUI1meFpfqAPADCvJjkp49w21SauxbHTWOYmuf7Rlcm+nIi5g14t7c5uNuHbN9iZa5xCotJ4qZqM1E+9TGpKFdQ01WO/P99q8Y6FiUrdrgyYOgdTuSgWDWnWt6iaCVyPYt2XH9Y=
   file_glob: true
-  file: target/scala-$TRAVIS_SCALA_VERSION/sbt-1.0/*.jar
+  file: target/scala-2.12/sbt-1.0/*.jar
   skip_cleanup: true
   on:
     tags: true
