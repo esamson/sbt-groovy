@@ -65,7 +65,7 @@ object GroovyPlugin extends AutoPlugin {
         lazy val classDirectoryAllGroovy = classDirectory.all(groovycFilter).value
 
         lazy val s: TaskStreams = streams.value
-        s.log.info(s"nb: $nb")
+        s.log.debug(s"nb: $nb")
 
         if (nb > 0) {
 
