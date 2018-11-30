@@ -1,14 +1,16 @@
 package ph.samson.sbt.groovy
 
-import sbt._
-import Keys._
 import java.io.File
+
+import sbt.Keys._
+import sbt._
 import Path.relativeTo
 
 object GroovyPlugin extends AutoPlugin {
   self =>
 
-  override lazy val projectSettings = groovy.settings ++ testGroovy.settings
+  override lazy val projectSettings: Seq[Setting[_]] =
+    groovy.settings ++ testGroovy.settings
 
   object autoImport {
     lazy val groovyVersion = settingKey[String]("groovy version")
@@ -27,11 +29,8 @@ object GroovyPlugin extends AutoPlugin {
       "org.codehaus.groovy" % "groovy-all" % groovyVersion.value % config.name,
       "org.apache.ant" % "ant" % "1.10.1" % config.name
     ),
-    /*managedClasspath in groovyc := (classpathTypes in groovyc, update) map { (ct, report) =>
-      Classpaths.managedJars(config, ct, report)
-    },*/
-    managedClasspath in groovyc := Classpaths
-      .managedJars(config, (classpathTypes in groovyc).value, update.value)
+    groovyc / managedClasspath := Classpaths
+      .managedJars(config, (groovyc / classpathTypes).value, update.value)
   )
 
   // to avoid namespace clashes, use a nested object
@@ -46,32 +45,29 @@ object GroovyPlugin extends AutoPlugin {
       inDependencies(ThisProject, transitive = true, includeRoot = false),
       inConfigurations(Compile))
 
-    lazy val settings = Seq(ivyConfigurations += Groovy) ++
+    lazy val settings: Seq[Setting[_]] = Seq(ivyConfigurations += Groovy) ++
       defaultSettings(Groovy) ++
       Seq(
-        groovySource in Compile := (sourceDirectory in Compile).value / "groovy",
-        unmanagedSourceDirectories in Compile += {
-          (groovySource in Compile).value
+        Compile / groovySource := (Compile / sourceDirectory).value / "groovy",
+        Compile / unmanagedSourceDirectories += {
+          (Compile / groovySource).value
         },
-        classDirectory in (Groovy, groovyc) := (crossTarget in Compile).value / "groovy-classes",
-        /*managedClasspath in groovyc := (classpathTypes in groovyc, update) map { (ct, report) =>
-          Classpaths.managedJars(Groovy, ct, report)
-      },*/
-        managedClasspath in groovyc := Classpaths
-          .managedJars(Groovy, (classpathTypes in groovyc).value, update.value),
-        groovyc in Compile := {
-          val sourceDirectory: File = (groovySource in Compile).value
+        Groovy / groovyc / classDirectory := (Compile / crossTarget).value / "groovy-classes",
+        groovyc / managedClasspath := Classpaths
+          .managedJars(Groovy, (groovyc / classpathTypes).value, update.value),
+        Compile / groovyc := {
+          val sourceDirectory: File = (Compile / groovySource).value
           val nb = (sourceDirectory ** "*.groovy").get.size
 
           lazy val managedClasspathInGroovyC =
-            (managedClasspath in groovyc).value
+            (groovyc / managedClasspath).value
           lazy val managedClasspathInCompile =
-            (managedClasspath in Compile).value
-          lazy val sourceManagedInCompile = (sourceManaged in Compile).value
+            (Compile / managedClasspath).value
+          lazy val sourceManagedInCompile = (Compile / sourceManaged).value
           lazy val classDirectoryInGroovy =
-            (classDirectory in (Groovy, groovyc)).value
-          lazy val resourceManagedInCompile = (resourceManaged in Compile).value
-          lazy val classDirectoryInCompile = (classDirectory in Compile).value
+            (Groovy / groovyc / classDirectory).value
+          lazy val resourceManagedInCompile = (Compile / resourceManaged).value
+          lazy val classDirectoryInCompile = (Compile / classDirectory).value
 
           lazy val classDirectoryAllCompiler =
             classDirectory.all(compileFilter).value
@@ -90,12 +86,12 @@ object GroovyPlugin extends AutoPlugin {
               classDirectoryAllGroovy ++
               Seq(classDirectoryInCompile)
 
-            //val classpath: Seq[File] = (managedClasspath in groovyc).value.files ++ classDirectories ++ (managedClasspath in Compile).value.files
-            val classpath
-              : Seq[File] = managedClasspathInGroovyC.files ++ classDirectories ++ (managedClasspathInCompile).files
+            val classpath: Seq[File] = managedClasspathInGroovyC.files ++
+              classDirectories ++
+              managedClasspathInCompile.files
             s.log.debug(classpath.mkString(";"))
-            val stubDirectory: File = (sourceManagedInCompile)
-            val destinationDirectory: File = (classDirectoryInGroovy)
+            val stubDirectory: File = sourceManagedInCompile
+            val destinationDirectory: File = classDirectoryInGroovy
 
             new GroovyC(classpath,
                         sourceDirectory,
@@ -106,16 +102,16 @@ object GroovyPlugin extends AutoPlugin {
               destinationDirectory)).map {
               case (k, v) =>
                 IO.copyFile(k,
-                            (resourceManagedInCompile) / v,
+                            resourceManagedInCompile / v,
                             preserveLastModified = true)
-                (resourceManagedInCompile) / v
+                resourceManagedInCompile / v
             }
           } else {
             Seq.empty
           }
         },
-        resourceGenerators in Compile += groovyc in Compile,
-        groovyc in Compile := ((groovyc in Compile) dependsOn (compile in Compile)).value
+        Compile / resourceGenerators += Compile / groovyc,
+        Compile / groovyc := ((Compile / groovyc) dependsOn (Compile / compile)).value
       )
   }
 
@@ -130,37 +126,34 @@ object GroovyPlugin extends AutoPlugin {
       inDependencies(ThisProject, transitive = true, includeRoot = false),
       inConfigurations(Test))
 
-    lazy val settings = Seq(ivyConfigurations += GroovyTest) ++
+    lazy val settings: Seq[Setting[_]] = Seq(ivyConfigurations += GroovyTest) ++
       inConfig(GroovyTest)(
         Defaults.testTasks ++ Seq(
-          definedTests := (definedTests in Test).value,
-          definedTestNames := (definedTestNames in Test).value,
-          fullClasspath := (fullClasspath in Test).value)) ++
+          definedTests := (Test / definedTests).value,
+          definedTestNames := (Test / definedTestNames).value,
+          fullClasspath := (Test / fullClasspath).value)) ++
       defaultSettings(GroovyTest) ++
       Seq(
-        groovySource in Test := (sourceDirectory in Test).value / "groovy",
-        unmanagedSourceDirectories in Test += {
-          (groovySource in Test).value
+        Test / groovySource := (Test / sourceDirectory).value / "groovy",
+        Test / unmanagedSourceDirectories += {
+          (Test / groovySource).value
         },
-        classDirectory in (GroovyTest, groovyc) := (crossTarget in Test).value / "groovy-test-classes",
-        /*managedClasspath in groovyc := (classpathTypes in groovyc, update) map { (ct, report) =>
-        Classpaths.managedJars(GroovyTest, ct, report)
-      },*/
-        managedClasspath in groovyc := Classpaths.managedJars(
+        GroovyTest / groovyc / classDirectory := (Test / crossTarget).value / "groovy-test-classes",
+        groovyc / managedClasspath := Classpaths.managedJars(
           GroovyTest,
-          (classpathTypes in groovyc).value,
+          (groovyc / classpathTypes).value,
           update.value),
-        groovyc in Test := {
-          val sourceDirectory: File = (groovySource in Test).value
+        Test / groovyc := {
+          val sourceDirectory: File = (Test / groovySource).value
           val nb = (sourceDirectory ** "*.groovy").get.size
 
           lazy val managedClasspathInGroovyC =
-            (managedClasspath in groovyc).value
-          lazy val managedClasspathInTest = (managedClasspath in Test).value
-          lazy val sourceManagedInTest = (sourceManaged in Test).value
+            (groovyc / managedClasspath).value
+          lazy val managedClasspathInTest = (Test / managedClasspath).value
+          lazy val sourceManagedInTest = (Test / sourceManaged).value
           lazy val classDirectoryInGroovyTest =
-            (classDirectory in (GroovyTest, groovyc)).value
-          lazy val resourceManagedInTest = (resourceManaged in Test).value
+            (GroovyTest / groovyc / classDirectory).value
+          lazy val resourceManagedInTest = (Test / resourceManaged).value
 
           lazy val classDirectoryAllCompile =
             classDirectory.all(groovy.compileFilter).value
@@ -170,9 +163,9 @@ object GroovyPlugin extends AutoPlugin {
             classDirectory.all(compileTestFilter).value
           lazy val classDirectoryAllGroovyCTest =
             classDirectory.all(groovycTestFilter).value
-          lazy val classDirectoryInCompile = (classDirectory in Compile).value
+          lazy val classDirectoryInCompile = (Compile / classDirectory).value
           lazy val classDirectoryInGroovy =
-            (classDirectory in (Groovy, groovyc)).value
+            (Groovy / groovyc / classDirectory).value
 
           lazy val s: TaskStreams = streams.value
 
@@ -211,8 +204,8 @@ object GroovyPlugin extends AutoPlugin {
             Seq.empty
           }
         },
-        resourceGenerators in Test += groovyc in Test,
-        groovyc in Test := ((groovyc in Test) dependsOn (compile in Test)).value
+        Test / resourceGenerators += Test / groovyc,
+        Test / groovyc := ((Test / groovyc) dependsOn (Test / compile)).value
       )
   }
 
