@@ -24,10 +24,10 @@ object GroovyPlugin extends AutoPlugin {
   import autoImport._
 
   def defaultSettings(config: Configuration) = Seq(
-    groovyVersion := "2.4.12",
+    groovyVersion := "2.5.4",
     libraryDependencies ++= Seq[ModuleID](
       "org.codehaus.groovy" % "groovy-all" % groovyVersion.value % config.name,
-      "org.apache.ant" % "ant" % "1.10.1" % config.name
+      "org.apache.ant" % "ant" % "1.10.5" % config.name
     ),
     groovyc / managedClasspath := Classpaths
       .managedJars(config, (groovyc / classpathTypes).value, update.value)
