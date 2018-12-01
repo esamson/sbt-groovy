@@ -7,7 +7,6 @@ import sbt._
 import Path.relativeTo
 
 object GroovyPlugin extends AutoPlugin {
-  self =>
 
   override lazy val projectSettings: Seq[Setting[_]] =
     groovy.settings ++ testGroovy.settings
