@@ -21,7 +21,7 @@ lazy val root = (project in file("."))
             url = url("https://edward.samson.ph")
           )
         ),
-        scalaVersion := "2.12.7",
+        scalaVersion := "2.12.13",
         pgpPublicRing := file("./travis/pubring.asc"),
         pgpSecretRing := file("./travis/secring.asc"),
         releaseEarlyWith := SonatypePublisher
